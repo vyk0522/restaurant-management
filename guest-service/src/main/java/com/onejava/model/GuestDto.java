@@ -1,5 +1,7 @@
 package com.onejava.model;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +19,11 @@ public class GuestDto implements Serializable{
     private String firstName;
     private String lastName;
     private String emailAddress;
-    private String address;
+
+    @JsonProperty("postalAddress") // postalAddress during serialization(json string)
+    @JsonAlias("address")  // address during deserialization(class)
+    private String location;
+
     private String country;
     private String state;
     private String phoneNumber;
