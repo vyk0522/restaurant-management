@@ -10,7 +10,8 @@ import org.springframework.http.HttpStatus;
 public enum ErrorCode {
     BAD_REQUEST("400", HttpStatus.BAD_REQUEST),
     GUEST_NOT_FOUND("404", HttpStatus.NOT_FOUND),
-    INTERNAL_SERVICE_ERROR("500", HttpStatus.INTERNAL_SERVER_ERROR);
+    INTERNAL_SERVICE_ERROR("500", HttpStatus.INTERNAL_SERVER_ERROR),
+    INVALID_PARAMETER("411", HttpStatus.BAD_REQUEST);
 
     @JsonValue
     public final String code;

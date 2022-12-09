@@ -3,7 +3,9 @@ package com.onejava.controller;
 import com.onejava.model.Filter;
 import com.onejava.model.GuestDto;
 import com.onejava.service.GuestService;
+import jakarta.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -12,6 +14,7 @@ http://localhost:8091/api/v1/guests
  */
 @RestController
 @RequestMapping("/api/v1/guests")
+@Validated // Required for PathVariable validation
 public class GuestController {
     @Autowired
     public GuestService guestService;
@@ -22,7 +25,7 @@ public class GuestController {
     }
 
     @GetMapping("/{id}")
-    public GuestDto getAGuest(@PathVariable Long id) {
+    public GuestDto getAGuest(@PathVariable @Min(1) Long id) {
         return guestService.readAGuest(id);
     }
 
