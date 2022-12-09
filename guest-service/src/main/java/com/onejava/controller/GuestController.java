@@ -1,5 +1,6 @@
 package com.onejava.controller;
 
+import com.onejava.model.Filter;
 import com.onejava.model.GuestDto;
 import com.onejava.service.GuestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,11 @@ public class GuestController {
     @GetMapping("/{id}")
     public GuestDto getAGuest(@PathVariable Long id) {
         return guestService.readAGuest(id);
+    }
+
+    @PostMapping("/filter")
+    public List<GuestDto> filterGuests(@RequestBody List<Filter> filters) {
+        return guestService.filterGuests(filters);
     }
 
 }

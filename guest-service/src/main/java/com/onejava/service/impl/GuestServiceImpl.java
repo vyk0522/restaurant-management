@@ -3,9 +3,11 @@ package com.onejava.service.impl;
 import com.onejava.constant.TypeReferenceConstant;
 import com.onejava.entity.Guest;
 import com.onejava.exception.GuestNotFoundException;
+import com.onejava.model.Filter;
 import com.onejava.model.GuestDto;
 import com.onejava.modelMapper.ModelMapper;
 import com.onejava.repository.GuestRepository;
+import com.onejava.repository.specification.GuestSpecification;
 import com.onejava.service.GuestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,9 @@ import java.util.Optional;
 public class GuestServiceImpl implements GuestService {
     @Autowired
     private GuestRepository guestRepository;
+
+    @Autowired
+    GuestSpecification guestSpecification;
 
     @Override
     public List<GuestDto> readAllGuests() {
@@ -32,5 +37,12 @@ public class GuestServiceImpl implements GuestService {
             return ModelMapper.convert(guest.get(), GuestDto.class);
         }
         throw new GuestNotFoundException("Guest not found with id: " + id);
+    }
+
+    @Override
+    public List<GuestDto> filterGuests(List<Filter> filters) {
+        List<Guest> guests = this.guestSpecification.getFilterQueryResult(filters);
+        return ModelMapper
+                .convert(guests, TypeReferenceConstant.LIST_OF_GUEST_DTO_TYPE_REFERENCE);
     }
 }
