@@ -3,6 +3,7 @@ package com.onejava.controller;
 import com.onejava.model.Filter;
 import com.onejava.model.GuestDto;
 import com.onejava.service.GuestService;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +37,7 @@ public class GuestController {
     }
 
     @PostMapping
-    public ResponseEntity<GuestDto> addAGuest(@RequestBody GuestDto guestDto){
+    public ResponseEntity<GuestDto> addAGuest(@Valid @RequestBody GuestDto guestDto){
         return guestService.createAGuest(guestDto);
     }
 
