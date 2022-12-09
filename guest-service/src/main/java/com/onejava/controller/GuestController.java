@@ -5,6 +5,7 @@ import com.onejava.model.GuestDto;
 import com.onejava.service.GuestService;
 import jakarta.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -32,6 +33,11 @@ public class GuestController {
     @PostMapping("/filter")
     public List<GuestDto> filterGuests(@RequestBody List<Filter> filters) {
         return guestService.filterGuests(filters);
+    }
+
+    @PostMapping
+    public ResponseEntity<GuestDto> addAGuest(@RequestBody GuestDto guestDto){
+        return guestService.createAGuest(guestDto);
     }
 
 }

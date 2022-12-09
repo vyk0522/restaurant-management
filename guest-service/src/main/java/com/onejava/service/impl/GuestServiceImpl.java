@@ -10,8 +10,11 @@ import com.onejava.repository.GuestRepository;
 import com.onejava.repository.specification.GuestSpecification;
 import com.onejava.service.GuestService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,5 +47,18 @@ public class GuestServiceImpl implements GuestService {
         List<Guest> guests = this.guestSpecification.getFilterQueryResult(filters);
         return ModelMapper
                 .convert(guests, TypeReferenceConstant.LIST_OF_GUEST_DTO_TYPE_REFERENCE);
+    }
+
+    @Override
+    public ResponseEntity<GuestDto> createAGuest(GuestDto guestDto) {
+        Guest guest = this.guestRepository.save(ModelMapper.convert(guestDto, Guest.class));
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(guest.getId())
+                .toUri();
+        return ResponseEntity
+                .created(location)
+                .body(ModelMapper.convert(guest, GuestDto.class));
     }
 }
