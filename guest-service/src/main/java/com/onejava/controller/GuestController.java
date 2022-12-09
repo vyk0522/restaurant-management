@@ -49,7 +49,7 @@ public class GuestController {
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.RESET_CONTENT)
+    @ResponseStatus(HttpStatus.RESET_CONTENT) // 205 Code
     public void deleteAGuest(@PathVariable Long id){
         this.guestService.deleteAGuest(id);
     }
