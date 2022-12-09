@@ -6,9 +6,11 @@ import com.onejava.service.GuestService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 /*
@@ -39,6 +41,17 @@ public class GuestController {
     @PostMapping
     public ResponseEntity<GuestDto> addAGuest(@Valid @RequestBody GuestDto guestDto){
         return guestService.createAGuest(guestDto);
+    }
+
+    @PutMapping("/{id}")
+    public GuestDto updateAGuest(@PathVariable Long id, @Valid @RequestBody GuestDto guestDto){
+        return guestService.updateAGuest(id, guestDto);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.RESET_CONTENT)
+    public void deleteAGuest(@PathVariable Long id){
+        this.guestService.deleteAGuest(id);
     }
 
 }

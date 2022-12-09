@@ -61,4 +61,24 @@ public class GuestServiceImpl implements GuestService {
                 .created(location)
                 .body(ModelMapper.convert(guest, GuestDto.class));
     }
+
+    @Override
+    public GuestDto updateAGuest(Long id, GuestDto guestDto) {
+        Optional<Guest> guest = this.guestRepository.findById(id);
+        if(guest.isEmpty()){
+            throw new GuestNotFoundException("Guest not found with id: " + id);
+        }
+        guestDto.setId(id);  // As ID won't be part of payload, save() will create new record instead of updating existing. To resolve that.
+        Guest savedGuest = this.guestRepository.save(ModelMapper.convert(guestDto, Guest.class));
+        return ModelMapper.convert(savedGuest, GuestDto.class);
+    }
+
+    @Override
+    public void deleteAGuest(Long id) {
+        Optional<Guest> guest = this.guestRepository.findById(id);
+        if(guest.isEmpty()){
+            throw new GuestNotFoundException("Guest not found with id: " + id);
+        }
+        this.guestRepository.deleteById(id);
+    }
 }

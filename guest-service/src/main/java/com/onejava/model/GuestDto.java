@@ -19,7 +19,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GuestDto implements Serializable{
-    @JsonIgnore
+    //@JsonIgnore
     private Long id;
     @NotNull(message = "FirstName is missing")
     private String firstName;
